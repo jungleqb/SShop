@@ -1,0 +1,8 @@
+RewriteEngine on
+
+RewriteRule ^trang-chu$ index.php 
+RewriteRule ^loai$ typeProduct.php 
+RewriteRule ^chitiet$ product.php
+RewriteRule ^gio-hang$ cart.php 
+
+
