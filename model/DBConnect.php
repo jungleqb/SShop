@@ -38,6 +38,9 @@ class DBConnect{
 		}
 		return false;
 	}
+	   function getRecentIdInsert(){
+        return $this->conn->lastInsertId();
+    }
 
 	function query($sql, $data = array()){
 		$this->stsm = $this->conn->prepare($sql);

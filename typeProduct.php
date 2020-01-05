@@ -2,7 +2,6 @@
 require_once"view/header.php";
 ?>
 
-
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
 		<div class="container">

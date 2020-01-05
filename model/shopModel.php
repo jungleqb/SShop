@@ -38,5 +38,40 @@ class shopModel extends DBConnect{
 	}
 
 
+
+
+
+
+
+
+
+
+// Thông tin khách hàng
+	function setCustomer($name, $gender, $mail, $tel, $address, $pass){
+		$sql = "INSERT INTO customer(name, gender, mail, tel, address, password) 
+				VALUES('$name', $gender, '$mail', '$tel', '$address', '$pass')
+		";
+		$check = $this->executeQuery($sql);
+		if($check) return $this->getRecentIdInsert();
+        return false;
+	}
+// Thêm hoá đơn
+	function setBill($idCustomer, $total, $dateOrder, $note){
+		$sql = "INSERT INTO bill(idCustomer, total, dateOrder, note)
+				VALUES($idCustomer, '$total', '$dateOrder', '$note')
+		";
+		$check = $this->executeQuery($sql);
+		if($check) return $this->getRecentIdInsert();
+        return false;
+	}
+// Thêm hoá đơn chi tiết
+	function setBillDetail($idProduct,$idBill,$quantity,$price,$discountPrice){
+		$sql = "INSERT INTO billdetail(idProduct,idBill,quantity,price,discountPrice)
+				VALUES($idProduct,$idBill,'$quantity','$price','$discountPrice')
+		";
+		return $this->executeQuery($sql);
+	}
+
+
 }
 ?>

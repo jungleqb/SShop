@@ -4,6 +4,16 @@ require_once"view/header.php";
 $ids = array_keys($_SESSION['cart']); //trả khoá của mảng trong session cart
 
 ?>
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb">
+		<div class="container">
+			<ul class="breadcrumb">
+				<li><a href="trang-chu">Trang chủ</a></li>
+				<li class="active">Giỏ hàng</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /BREADCRUMB -->
 <div class="session">
 	<div class="container">
 		<div class="row">
@@ -91,7 +101,7 @@ $ids = array_keys($_SESSION['cart']); //trả khoá của mảng trong session c
 					</div>
 					<div class="pull-right">
 						<button class="primary-btn" type="submit">Cập nhật</button>
-						<button class="primary-btn">Thanh toán</button>
+						<a href="thanh-toan" class="primary-btn">Thanh toán</a>
 					</div>
 				</div>
 				</form>

@@ -1,5 +1,6 @@
 <?php 
 require"view/_header.php";
+ob_start(); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
