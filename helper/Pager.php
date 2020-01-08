@@ -83,7 +83,7 @@ class Pager{
 					$listPages .= "<li><a href='$actual_link/".$i."'>".$i.'</a>';
 				}
 			}
-			$paginationHTML = '<ul>'.$start.$prev.$listPages.$next.$end.'</ul>';
+			$paginationHTML = '<ul class="store-pages">'.$prev.$listPages.$next.'</ul>';
 		}
 		return $paginationHTML;
 	}

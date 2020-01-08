@@ -146,8 +146,8 @@ $hot = $index['hot'];
 											?>%
 										</span>
 									</div>
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="upload/product/<?=$sl->img?>" alt="">
+									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Chi tiết</button>
+									<img src="upload/product/<?=$sl->img?>" height="300px"alt="">
 								</div>
 								<div class="product-body">
 									<h3 class="product-price"><?=number_format($sl->promotionPrice)?>đ <del class="product-old-price"><?=number_format($sl->price)?>đ</del></h3>
@@ -161,8 +161,7 @@ $hot = $index['hot'];
 									<h2 class="product-name"><a href="#"><?=$sl->title?></a></h2>
 									<div class="product-btns">
 										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<a href="addCart.php?id=<?=$sl->id?>" class="addCart"><button class="primary-btn add-to-cart" ><i class="fa fa-shopping-cart"></i> Add to Cart</button></a>
+										<a href="addCart.php?id=<?=$sl->id?>" class="addCart"><button class="primary-btn add-to-cart" ><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button></a>
 									</div>
 								</div>
 							</div>
@@ -244,8 +243,8 @@ $hot = $index['hot'];
 										<?php else: ?>
 										<?php endif ?>
 									</div>
-									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
-									<img src="upload/product/<?=$h->img?>" alt="">
+									<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Chi tiết</button>
+									<img src="upload/product/<?=$h->img?>" height="300px" alt="">
 								</div>
 								<div class="product-body">
 									<?php if($h->promotionPrice != 0): ?>
@@ -263,8 +262,7 @@ $hot = $index['hot'];
 									<h2 class="product-name"><a href="#"><?=$h->title?></a></h2>
 									<div class="product-btns">
 										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-										<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-										<a href="addCart.php?id=<?=$h->id?>" class="addCart"><button class="primary-btn add-to-cart-mt" data-id="<?=$h->id?>"><i class="fa fa-shopping-cart"></i> Add to Cart</button></a>
+										<a href="addCart.php?id=<?=$h->id?>" class="addCart"><button class="primary-btn add-to-cart-mt" data-id="<?=$h->id?>"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button></a>
 									</div>
 								</div>
 							</div>

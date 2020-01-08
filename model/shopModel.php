@@ -1,6 +1,7 @@
 <?php 
 require_once "DBConnect.php";
 
+
 class shopModel extends DBConnect{
 // Lấy slide
 	function getSlide(){
@@ -12,7 +13,7 @@ class shopModel extends DBConnect{
 	function getListHome(){
 		$sql = "SELECT * 
 				FROM typeproduct
-				WHERE parentId = 0
+				WHERE parentId = 0;
 		";
 	return $this->getMoreRows($sql);
 	}
@@ -34,6 +35,35 @@ class shopModel extends DBConnect{
 				WHERE status =1
 				-- AND $date - DATE_FORMAT(updateAt,'%Y%m%d') <= 7
 		";
+		return $this->getMoreRows($sql);
+	}
+// Lấy loại cha 
+	function getMenuParent(){
+		$sql = "SELECT * 
+				FROM typeproduct 
+				WHERE parentId = 0; 
+
+		";
+		return $this->getMoreRows($sql);
+	}
+//  Lấy loại con
+	function getMenuChil($idParent){
+		$sql = "SELECT *
+				FROM typeproduct
+				WHERE parentId = $idParent;
+		";
+		return $this->getMoreRows($sql);
+	}
+// lấy sản phẩm theo thể loại
+	function getProductsByIdType($url,$position = -1, $quantity = -1){
+		$sql = "SELECT p.*, t.name, t.nameKo
+				FROM product p
+				INNER JOIN typeproduct t ON t.id = idType
+				WHERE nameKo = '$url' 
+		";
+		if($position != -1 && $quantity != -1){
+			$sql .="LIMIT $position,$quantity";
+		}
 		return $this->getMoreRows($sql);
 	}
 
