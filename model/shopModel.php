@@ -60,10 +60,30 @@ class shopModel extends DBConnect{
 				FROM product p
 				INNER JOIN typeproduct t ON t.id = idType
 				WHERE nameKo = '$url' 
+				ORDER BY id DESC
 		";
 		if($position != -1 && $quantity != -1){
 			$sql .="LIMIT $position,$quantity";
 		}
+		return $this->getMoreRows($sql);
+	}
+// Lấy chi tiết tin
+	function getProductDetail($id,$url,$title){
+		$sql = "SELECT p.*, t.name, t.nameKo
+				FROM product p 
+				INNER JOIN typeproduct t ON t.id = idType
+				WHERE p.id = $id
+				AND nameKo = '$url'
+				AND titleKo = '$title'
+		";
+		return $this->getOneRow($sql);
+	}
+// Lấy ảnh thumbnail 
+	function getThumbnail($idP){
+		$sql = "SELECT * 
+				FROM thumbnail
+				WHERE idProduct = $idP
+		";
 		return $this->getMoreRows($sql);
 	}
 

@@ -165,7 +165,7 @@ $pro = $data['pro'];
 											<?php else: ?>
 											<?php endif ?>
 										</div>
-										<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Chi tiết</button>
+										<a class="main-btn quick-view" href="<?=$p->nameKo?>/<?=$p->titleKo?>-<?=$p->id?>.html"><i class="fa fa-search-plus"></i> Chi tiết</a>
 										<img src="upload/product/<?=$p->img?>" height ="300px"alt="">
 									</div>
 									<div class="product-body">

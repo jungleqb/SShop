@@ -49,9 +49,21 @@ class shopController{
 	//  Hàm xử lý ở trang chi tiết sản phẩm
 	public function detail(){
 
+		if(isset($_GET['id']) && isset($_GET['url']) && isset($_GET['title'])){
+			$id = $_GET['id'];
+			$url = $_GET['url'];
+			$title = $_GET['title'];
+			$model = new shopModel;
+			$pro = $model->getProductDetail($id,$url,$title);
+
+			$thumb = $model->getThumbnail($pro->id);
+			
+		}
+
 
 		return array(
-
+			'pro'=>$pro,
+			'thumb'=>$thumb
 		);
 	}
 

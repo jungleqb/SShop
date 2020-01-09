@@ -1,5 +1,10 @@
 <?php 
 require_once"view/header.php";
+require_once"controller/shopController.php";
+$ctrl = new shopController;
+$data = $ctrl->detail();
+$pro = $data['pro'];
+$thumb = $data['thumb'];
 ?>
 
 
@@ -25,34 +30,37 @@ require_once"view/header.php";
 				<!--  Product Details -->
 				<div class="product product-details clearfix">
 					<div class="col-md-6">
+					<?php if($pro->thumbImg == null):?>
 						<div id="product-main-view">
 							<div class="product-view">
-								<img src="public/template/img/main-product01.jpg" alt="">
+								<img src="upload/product/<?=$pro->img?>" height="550px" alt="">
 							</div>
+						</div>
+					<?php else: ?>
+					
+						<div id="product-main-view">
 							<div class="product-view">
-								<img src="public/template/img/main-product02.jpg" alt="">
+								<img src="upload/product/<?=$pro->img?>" height="550px" alt="">
 							</div>
+							<?php foreach($thumb as $tm): ?>
 							<div class="product-view">
-								<img src="public/template/img/main-product03.jpg" alt="">
+								<img src="upload/product/<?=$tm->img?>" height="550px" alt="">
 							</div>
-							<div class="product-view">
-								<img src="public/template/img/main-product04.jpg" alt="">
-							</div>
+							<?php endforeach ?>
+
 						</div>
 						<div id="product-view">
 							<div class="product-view">
-								<img src="public/template/img/thumb-product01.jpg" alt="">
+								<img src="upload/product/<?=$pro->img?>" width="50px" height="140px" alt="">
 							</div>
+							<?php foreach($thumb as $tm): ?>
 							<div class="product-view">
-								<img src="public/template/img/thumb-product02.jpg" alt="">
+								<img src="upload/product/<?=$tm->img?>" width="50px" height="140px" alt="">
 							</div>
-							<div class="product-view">
-								<img src="public/template/img/thumb-product03.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="public/template/img/thumb-product04.jpg" alt="">
-							</div>
+							<?php endforeach ?>
+
 						</div>
+					<?php endif ?>
 					</div>
 					<div class="col-md-6">
 						<div class="product-body">
@@ -60,7 +68,7 @@ require_once"view/header.php";
 								<span>New</span>
 								<span class="sale">-20%</span>
 							</div>
-							<h2 class="product-name">Product Name Goes Here</h2>
+							<h2 class="product-name"><?=$pro->title?></h2>
 							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
 							<div>
 								<div class="product-rating">
@@ -95,9 +103,9 @@ require_once"view/header.php";
 							<div class="product-btns">
 								<div class="qty-input">
 									<span class="text-uppercase">QTY: </span>
-									<input class="input" type="number">
+									<input class="input" type="number" name="cart[qty][<?=$pro->id;?>]" value="<?=$_SESSION['cart'][$pro->id]?>">
 								</div>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+								<a href="addCart.php?id=<?=$pro->id?>" class="addCart"><button class="primary-btn add-to-cart" data-id="<?=$pro->id?>"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button></a>
 								<div class="pull-right">
 									<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 									<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
