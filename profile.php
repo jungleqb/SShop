@@ -1,73 +1,76 @@
-<?php require_once"view/header.php" ?>
+<?php require_once"view/header.php"; 
+?>
 <style type="text/css">
 	.tong{
-		min-height: 600px;
-		background: #f5f5f5;
+    min-height: 600px;
+    background: #f5f5f5;
 
-	}
-	.tong1{
-		margin-top:20px 
-	}
-	.tong1 .left{
-		padding: 30px;
-	}
-	.tong1 .right{
-		background: white;
-		padding: 30px;
-		border: 0.5px solid #cccccccc;
-	}
-	.avatar {
-	  vertical-align: middle;
-	  width: 50px;
-	  height: 50px;
-	  border-radius: 50%;
-	  float: left;
-	  margin-right: 20px; 
-	}
-	.name{
-		padding-top: 10px;
-		font-weight:bold;
-		padding-bottom: 10px;
-		border-bottom: 1px solid white; 
-	}
-	.editname{
-		font-weight: normal;
-		color: #999;
-	}
-	.menubar{
-		padding: 30px 10px ;
-	}
-	.menubar>ul>li{
-		padding: 5px;
-	}
-	.menubar>ul>li>a{
-		padding-left: 20px; 
-		font-size: 16px;
-	}
-	.titilecon{
-		padding-bottom: 10px; 
-		border-bottom: 1px solid #f5f5f5;
-	}
-	.contentcon{
-		padding-top: 60px;
-	}
-	.btncc{
-		border: none;
-		padding: 5px 15px;
-		background: #F8694A;
-		color: white;
-	}
-	.btncc:hover{
-		opacity: 0.8;
-	}
+  }
+  .tong1{
+    margin-top:20px 
+  }
+  .tong1 .left{
+    padding: 30px;
+  }
+  .tong1 .right{
+    background: white;
+    padding: 30px;
+    border: 0.5px solid #cccccccc;
+  }
+  .avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    float: left;
+    margin-right: 20px; 
+  }
+  .name{
+    padding-top: 10px;
+    font-weight:bold;
+    padding-bottom: 10px;
+    border-bottom: 1px solid white; 
+  }
+  .editname{
+    font-weight: normal;
+    color: #999;
+  }
+  .menubar{
+    padding: 30px 10px ;
+  }
+  .menubar>ul>li{
+    padding: 5px;
+  }
+  .menubar>ul>li>a{
+    padding-left: 20px; 
+    font-size: 16px;
+  }
+  .titilecon{
+    padding-bottom: 10px; 
+    border-bottom: 1px solid #f5f5f5;
+  }
+  .contentcon{
+    padding-top: 60px;
+  }
+  .btncc{
+    border: none;
+    padding: 5px 15px;
+    background: #F8694A;
+    color: white;
+  }
+  .btncc:hover{
+    opacity: 0.8;
+  }
+
 </style>
+
 <section class="tong">
 	<div class="container">
 		<div class="row tong1" >
 			<div class="col-md-3 left" >
-				<img src="upload/avatar.jpg" alt="Avatar" class="avatar">
+				<img src="<?=$_SESSION['user_image']?>" alt="Avatar" class="avatar">
 				<div class="name">
-						Văn Hải
+						<?=$_SESSION['user_name']?>
 					<p class="editname">
 						<a href=""><i class="fa fa-edit"></i> Sửa Hồ Sơ</a>
 					</p>

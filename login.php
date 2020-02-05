@@ -1,51 +1,52 @@
 <?php require_once "view/header.php";
-include'test.php';
-$facebook_output = '';
-
-$facebook_helper = $facebook->getRedirectLoginHelper();
-
-if(isset($_GET['code'])){
-	if(isset($_GET['access_token'])){
-		$access_token = $_SESSION['access_token'];
-	}
-	else{
-		$access_token = $facebook_helper->getAccessToken();
-		$_SESSION['access_token'] = $access_token;
-		$facebook->setDefaultAccessToken($_SESSION['access_token']);
-	}
-	$graph_response = $facebook->get("/me?fields=name,email", $access_token);
-	$facebook_user_info = $graph_response->getGraphUser();
-	if(!empty($facebook_user_info['id'])){
-		$_SESSION['user_image'] = 'http://graph.facebook.com/'.$facebook_user_info['id'].'/picture';
-	}
-	if(!empty($facebook_user_info['name'])){
-		$_SESSION['user_name'] = $facebook_user_info['name'];
-	}
-	if(!empty($facebook_user_info['email'])){
-		$_SESSION['user_email'] = $facebook_user_info['email'];
-	}
+require_once "model/shopModel.php";
+$model = new shopModel;
+if(isset($_POST['sm'])){
+    $mail = $_POST['mail'];
+    $pass = $_POST['pass'];
+    $data = $model->loginAccount($mail,$pass);
+    if($data){
+        $_SESSION['tokenid'] = $data->token;
+        $_SESSION['nameu']=$data->ten;
+        $_SESSION['iduser']=$data->id;
+        header("location:ca-nhan");
+        return;
+    }
+    else{
+        $message = 'Tài khoản không đúng';
+    }
 }
-else{
-	$facebook_permissions = ['email'];
 
-	$facebook_login_url = $facebook_helper->getLoginUrl('http://localhost/shop/shop/login.php',$facebook_permissions);
 
-	$facebook_login_url = '<div align="center"><a href="'.$facebook_login_url.'"><img src="loginfb.png"></a></div>';
-}
+
 ?>
 
-<section>
+<section style="background: #f5f5f5">
 	<div class="container">
-		<div class="row">
-			<?php
-				if(isset($facebook_login_url)){
-					echo $facebook_login_url;
-				}
-				else{
-					echo '<div class="panel-heading">Welcome User'.$_SESSION['user_name'].'</div>';
-					echo '<a href="view/logout.php">Logout</a>';
-				}
-			?>
+		<div class="row" style="padding:50px 0px">
+			<div class="col-md-8"><span style="font-size: 28px">Chào mừng đến với Kshop. Đăng nhập ngay!<span></div>
+			<div class="col-md-4">Thành viên mới? <a href="dang-ky">Đăng kí</a> tại đây</div>
+		</div>
+		<div class="row" style="background: white; padding: 50px 220px;">
+		<form method="POST">
+			<div class="col-md-8">
+				<div class="form-group">
+				    <label for="exampleInputEmail1">Email*</label>
+				    <input type="email" name="mail" placeholder="Vui lòng nhập email của bạn" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+				</div>
+				<div class="form-group">
+				    <label for="exampleInputPassword1">Mật khẩu*</label>
+				    <input type="password" name="pass" placeholder="Vui lòng nhập mật khẩu của bạn" class="form-control" id="exampleInputPassword1">
+				</div>
+				<a href="">Quên mật khẩu?</a>
+			</div>
+			<div class="col-md-4" style="padding-top: 25px">
+				<button type="submit" class="primary-btn add-to-cart" style="width: 100%">Đăng nhập</button>
+				<p style="font-size: 12px; padding-top: 5px">Hoặc đăng nhập bằng</p>
+				
+          		    <img src="upload/loginfb.png" width="100%">
+			</div>
+		</form>
 		</div>
 	</div>
 </section>

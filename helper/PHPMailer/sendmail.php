@@ -2,7 +2,7 @@
 
 
 require_once 'src/PHPMailer.php';
-function sendMail($body){
+function sendMail($mTo,$body){
     $mail = new PHPMailer(true);
     try {
         $mail->SMTPOptions = array(
@@ -22,7 +22,7 @@ function sendMail($body){
         $mail->SMTPSecure = 'tls';   // or ssl  
         $mail->Port       = 587;  // 465  
         $mail->setFrom('kkokjun98@gmail.com', 'E-SHOP');
-        $mail->addAddress('kkokjun98@gmail.com', 'Khách hàng');   
+        $mail->addAddress($mTo, 'Khách hàng');   
         $mail->addReplyTo('kkokjun98@gmail.com', 'E-SHOP');
         // Attachments
         // $mail->addAttachment('../../temp/a.JPG'); 

@@ -36,7 +36,7 @@ if(isset($_POST['sub'])){
 					<h3>Hoá đơn chi tiết của '.$name.'</h3>
 					<h2>Tổng tiền: '.number_format($cart->total()).'đ </h2>
 				';	
-				$mail = sendMail($body);
+				$mail = sendMail('kkokjun98@gmail.com',$body);
 				if($mail){
 					$mess = "Đặt Hàng thành công! Xin cảm ơn quý khách.";
 					unset($_SESSION['cart']);

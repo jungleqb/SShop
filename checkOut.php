@@ -4,6 +4,7 @@ if(empty($_SESSION['cart'])){
 	return;
 }
 
+
 require_once"view/_checkout.php";
 
 ?>
@@ -43,7 +44,7 @@ require_once"view/_checkout.php";
 								<h3 class="title">Thông tin chi tiết</h3>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="name" placeholder="Họ và Tên">
+								<input class="input" type="text" value="<?php if(isset($name)) echo $name?>" name="name" placeholder="Họ và Tên">
 							</div>
 							<div  class="form-group">
                                 <label class="control-label col-sm-2" style="display: block">Giới tính</label>
@@ -53,13 +54,13 @@ require_once"view/_checkout.php";
                                 </div>
                             </div>
 							<div class="form-group">
-								<input class="input" type="email" name="mail" placeholder="Email">
+								<input class="input" type="email" value="<?php if(isset($mail)) echo $mail?>" name="mail" placeholder="Email">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="address" placeholder="Địa chỉ">
+								<input class="input" type="text" value="<?php if(isset($address)) echo $address?>" name="address" placeholder="Địa chỉ">
 							</div>
 							<div class="form-group">
-								<input class="input" type="tel" name="tel" placeholder="Số điện thoại">
+								<input class="input" type="tel" value="<?php if(isset($tel)) echo $tel?>" name="tel" placeholder="Số điện thoại">
 							</div>
 							<div class="form-group">
 								<textarea rows="8" class="form-control" placeholder="Note" name="note"></textarea>

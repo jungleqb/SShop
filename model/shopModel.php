@@ -86,6 +86,21 @@ class shopModel extends DBConnect{
 		";
 		return $this->getMoreRows($sql);
 	}
+// insert thông tin ở fb 
+	function setLoginFacebook($idfb,$name,$mail){
+		$sql = "INSERT INTO loginfb(idfb,name,mail)
+				VALUES($idfb,'$name','$mail')
+		";
+		return $this->executeQuery($sql);
+	}
+//  Đăng ký tài khoản người dùng
+	function register($name,$mail,$pass){
+		$sql = "INSERT INTO user(name,mail,pass)
+				VALUES('$name','$mail','$pass')
+	
+		";
+		return $this->executeQuery($sql);
+	}
 
 
 

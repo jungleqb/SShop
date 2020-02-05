@@ -105,7 +105,7 @@ $thumb = $data['thumb'];
 									<span class="text-uppercase">QTY: </span>
 									<input class="input" type="number" name="cart[qty][<?=$pro->id;?>]" value="<?=$_SESSION['cart'][$pro->id]?>">
 								</div>
-								<a href="addCart.php?id=<?=$pro->id?>" class="addCart"><button class="primary-btn add-to-cart" data-id="<?=$pro->id?>"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button></a>
+								<a href="addCart.php?id=<?=$pro->id?>" class="add"><button class="primary-btn" type="submit" data-id="<?=$pro->id?>"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button></a>
 								<div class="pull-right">
 									<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 									<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>

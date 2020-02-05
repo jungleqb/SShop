@@ -1,10 +1,11 @@
 RewriteEngine on
 
 RewriteRule ^trang-chu$ index.php 
-RewriteRule ^chitiet$ product.php
+RewriteRule ^ca-nhan$ profile.php
 RewriteRule ^gio-hang$ cart.php
 RewriteRule ^thanh-toan$ checkOut.php 
 RewriteRule ^dang-nhap$ login.php 
+RewriteRule ^dang-ky$ register.php 
 
 
 

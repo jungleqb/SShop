@@ -116,15 +116,25 @@ $typeP = $model->getMenuParent();
 								<div class="header-btns-icon">
 									<i class="fa fa-user-o"></i>
 								</div>
-								<strong class="text-uppercase">Tài Khoản <i class="fa fa-caret-down"></i></strong>
+								<strong class="text-uppercase"> 
+									<?php 
+										if(isset($_SESSION['user_id'])){
+											echo $_SESSION['user_name'];
+										}
+										else{
+											echo 'Tài khoản';
+										}
+									?>
+									<i class="fa fa-caret-down"></i></strong>
 							</div>
-							<a href="#" class="text-uppercase">Tham gia</a>
+
 							<ul class="custom-menu">
-								<li><a href="#"><i class="fa fa-user-o"></i> Tài khoản của tôi</a></li>
-								<li><a href="#"><i class="fa fa-heart-o"></i> Sản phẩm yêu thích</a></li>
+								<li><a href="ca-nhan"><i class="fa fa-user-o"></i> Tài khoản của tôi</a></li>
+								<li><a href="logout.php"><i class="fa fa-heart-o"></i> Sản phẩm yêu thích</a></li>
 								<li><a href="thanh-toan"><i class="fa fa-check"></i> Thanh toán</a></li>
 								<li><a href="dang-nhap"><i class="fa fa-unlock-alt"></i> Đăng nhập</a></li>
 								<li><a href="dang-ky"><i class="fa fa-user-plus"></i> Tạo tài khoán mới</a></li>
+								<!-- <li><a href="view/logout.php"><i class="fa fa-user-slash"></i> Đăng xuất</a></li> -->
 							</ul>
 						</li>
 						<!-- /Account -->
