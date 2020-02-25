@@ -1,4 +1,9 @@
 <?php require_once"view/header.php"; 
+if(empty($_SESSION['iduser'])){
+	header("location:dang-nhap");
+}
+$acc = $model->getAccount($_SESSION['iduser']);
+
 ?>
 <style type="text/css">
 	.tong{
@@ -68,9 +73,9 @@
 	<div class="container">
 		<div class="row tong1" >
 			<div class="col-md-3 left" >
-				<img src="<?=$_SESSION['user_image']?>" alt="Avatar" class="avatar">
+				<img src="upload/<?=$acc->avatar?>" alt="Avatar" class="avatar">
 				<div class="name">
-						<?=$_SESSION['user_name']?>
+						<?=$acc->name?>
 					<p class="editname">
 						<a href=""><i class="fa fa-edit"></i> Sửa Hồ Sơ</a>
 					</p>
@@ -84,12 +89,13 @@
 						<li><a href="#">Thêm mật khẩu</a></li>
 						<li><h4><a href=""><i style="color:#F8694A " class="fa fa-clipboard"></i> Đơn Mua</a></h4></li>
 						<li><h4><a href=""><i style="color:#F8694A " class="fa fa-bitcoin"></i> Tiền Xu</a></h4></li>
+						<li><h4><a href="Shop/"><i style="color:#F8694A " class="fa fa-home"></i> Kênh người bán</a></h4></li>
 					</ul>
 				</div>
 			</div>
 			<div class="col-md-9 right" >
 				<div class="titilecon">
-				<p><span style="font-size: 24px;">Hồ Sơ Của Tôi</span>  đã tham gia : 22-12-2000</p>
+				<p><span style="font-size: 24px;">Hồ Sơ Của Tôi</span>  đã tham gia : <?=$acc->updateAt?></p>
 				Quản lý thông tin hồ sơ để bảo mật tài khoản.
 				</div>
 				<div class="contentcon">
@@ -99,22 +105,33 @@
 							  <div class="form-group">
 							    <label class="control-label col-sm-3" for="text">Tên </label>
 							    <div class="col-sm-9">
-							      <input type="text" name="ten" value="" class="form-control" id="text" placeholder="Enter text">
+							      <input type="text" name="ten" value="<?=$acc->name?>" class="form-control" id="text" placeholder="Enter text">
+							    </div>
+							  </div>
+							  <div class="form-group">
+							    <label class="control-label col-sm-3" for="text">Giới tính </label>
+							    <div class="col-sm-9">
+							    	<?php if($acc->gender == 0): ?>
+							     <label class="radio-inline"><input value="0" name="home" type="radio" checked="checked">Nam</label>
+                                <label class="radio-inline"><input value="1" name="home" type="radio" >Nữ</label>
+                                <?php else: ?>
+                                	<label class="radio-inline"><input value="0" name="home" type="radio" >Nam</label>
+                                <label class="radio-inline"><input value="1" name="home" type="radio" checked="checked">Nữ</label>
+                            <?php endif ?>
 							    </div>
 							  </div>
 							  <div class="form-group">
 							    <label class="control-label col-sm-3" for="text">Email </label>
 							    <div class="col-sm-9">
-							      <input type="text" name="mail" value="" class="form-control" id="text" placeholder="Enter text">
+							      <input type="text" name="mail" value="<?=$acc->mail?>" class="form-control" id="text" placeholder="Enter text">
 							    </div>
 							  </div>
 							  <div class="form-group">
 							    <label class="control-label col-sm-3" for="text">Số điện thoại </label>
 							    <div class="col-sm-9">
-							      <input type="text" name="sdt" value="" class="form-control" id="text" placeholder="Enter text">
+							      <input type="text" name="sdt" value="<?=$acc->phone?>" class="form-control" id="text" placeholder="Enter text">
 							    </div>
 							  </div>
-
 							  <div class="form-group">
 							    <div class="col-sm-offset-3 col-sm-9">
 							      <button type="submit" name="sm" class="btncc">Lưu</button>

@@ -20,10 +20,13 @@ if(isset($_POST['sm'])){
 				    <label for="exampleInputEmail1">Mã xác nhận </label>
 				    <input type="text" name="token" placeholder="Mã xác nhận mail của bạn" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
 					</div>
-
+					<button type="submit" name="xm" class="primary-btn" style="width: 100%">Xác nhận</button>
 				';
+
+				
+				
 			}
-			$token = $_POST['token'];
+			
 
 		}
 		else{
@@ -34,8 +37,19 @@ if(isset($_POST['sm'])){
 		$mess = "* Xin vui lòng điền đủ thông tin";
 	}
 
-
+if($output){
+					if(isset($_POST['xm'])){
+						$token = $_POST['token'];
+						if($token == $codeToken){
+							$a = $model->register($name,$mail,$pass);
+							if($a){
+								$mess = "Success!";
+							}
+						}
+					}					
+				}
 }
+				
 	
 
 ?>
@@ -62,6 +76,11 @@ if(isset($_POST['sm'])){
 				    <label for="exampleInputPassword1">Nhập lại mật khẩu*</label>
 				    <input type="password" name="rpass" value="<?php if(isset($rpass)) echo $rpass?>" placeholder="Vui lòng nhập mật khẩu của bạn" class="form-control" id="exampleInputPassword1">
 				</div>
+					<?php 
+					if(isset($output)){
+						echo $output;
+					}
+				?>
 				
 			</div>
 
@@ -70,12 +89,8 @@ if(isset($_POST['sm'])){
 				    <label for="exampleInputEmail1">Họ tên*</label>
 				    <input type="text" name="name" value="<?php if(isset($name)) echo $name?>" placeholder="Vui lòng nhập họ tên của bạn" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
 				</div>
-				<?php 
-					if(isset($output)){
-						echo $output;
-					}
-				?>
-				<button type="submit" name="sm" class="primary-btn add-to-cart" style="width: 100%">Đăng ký</button>
+
+				<button type="submit" name="sm" class="primary-btn" style="width: 100%">Đăng ký</button>
 				<p style="font-size: 12px; padding-top: 5px">Hoặc đăng ký bằng</p>
 				
           		    <img src="upload/loginfb.png" width="100%">

@@ -50,7 +50,7 @@ class shopModel extends DBConnect{
 	function getMenuChil($idParent){
 		$sql = "SELECT *
 				FROM typeproduct
-				WHERE parentId = $idParent;
+				WHERE parentId = $idParent
 		";
 		return $this->getMoreRows($sql);
 	}
@@ -69,11 +69,12 @@ class shopModel extends DBConnect{
 	}
 // Lấy chi tiết tin
 	function getProductDetail($id,$url,$title){
-		$sql = "SELECT p.*, t.name, t.nameKo
+		$sql = "SELECT p.*, t.name, t.nameKo, s.nameKo as nameKoShop, s.name as nameShop
 				FROM product p 
 				INNER JOIN typeproduct t ON t.id = idType
+				INNER JOIN shop s ON s.id = idShop
 				WHERE p.id = $id
-				AND nameKo = '$url'
+				AND t.nameKo = '$url'
 				AND titleKo = '$title'
 		";
 		return $this->getOneRow($sql);
@@ -101,6 +102,48 @@ class shopModel extends DBConnect{
 		";
 		return $this->executeQuery($sql);
 	}
+// Đăng ký đầy đủ thông tin
+	function registerAll($name,$mail,$pass,$gender,$address,$tel){
+		$sql = "INSERT INTO user(name,mail,pass,gender,address,phone)
+				VALUES('$name','$mail','$pass',$gender,'$address','$tel')
+		";
+		return $this->executeQuery($sql);
+	}
+//  Đăng nhập vào tài khoản
+	function loginAccount($mail,$pass){
+		$sql = "SELECT *
+				FROM user 
+				WHERE mail = '$mail'
+				AND pass = '$pass'
+		";
+		return $this->getOneRow($sql);
+	}
+//  lấy thông tin từ tài khoản
+	function getAccount($iduser){
+		$sql = "SELECT * 
+				FROM user 
+				WHERE id = $iduser
+
+		";
+		return $this->getOneRow($sql);
+	}
+//  Kiểm tra mail tồn tại hay chưa
+	function checkMail($mail){
+		$sql = "SELECT *
+				FROM user 
+				WHERE mail = '$mail'
+		";
+		return $this->getMoreRows($sql);
+	}
+// Lấy thông sản phẩm từ shop gian hàng
+	function getProductByShop($url){
+		$sql = "SELECT * 
+				FROM product p 
+				INNER JOIN shop s ON s.id = p.idShop
+				WHERE nameKo = '$url'
+		";
+		return $this->getMoreRows($sql);
+	}
 
 
 
@@ -108,8 +151,14 @@ class shopModel extends DBConnect{
 
 
 
-
-
+// Hàm tăng lượt xem trang
+	function addBuyed($add,$id){
+		$sql = "UPDATE product
+				SET buyed = $add
+				WHERE id = '$id'
+		";
+		return $this->executeQuery($sql);
+	} 
 
 // Thông tin khách hàng
 	function setCustomer($name, $gender, $mail, $tel, $address, $pass){

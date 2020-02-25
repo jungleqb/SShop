@@ -67,6 +67,7 @@ $thumb = $data['thumb'];
 							<div class="product-label">
 								<span>New</span>
 								<span class="sale">-20%</span>
+
 							</div>
 							<h2 class="product-name"><?=$pro->title?></h2>
 							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
@@ -81,7 +82,7 @@ $thumb = $data['thumb'];
 								<a href="#">3 Review(s) / Add Review</a>
 							</div>
 							<p><strong>Availability:</strong> In Stock</p>
-							<p><strong>Brand:</strong> E-SHOP</p>
+							<p><strong>Shop:</strong> <a href="<?=$pro->nameKoShop?>.html"><?=$pro->nameShop?></a></p>
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
 								dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 							<div class="product-options">

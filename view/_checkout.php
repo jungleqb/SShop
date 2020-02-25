@@ -22,6 +22,7 @@ if(isset($_POST['sub'])){
 
 			$ids = array_keys($_SESSION['cart']);
 			if(isset($ids)){
+
 				$product = $DB->query('SELECT * FROM product WHERE id IN('.implode(',',$ids).')');
 				foreach($product as $cartDetail){
 					$idProduct = $cartDetail->id;
@@ -29,6 +30,7 @@ if(isset($_POST['sub'])){
 					$price = $cartDetail->price;
 					$discountPrice = $cartDetail->promotionPrice;
 					$billDetail = $model->setBillDetail($idProduct,$idBill,$quantity,$price,$discountPrice);
+					$a = $model->addBuyed($cartDetail->buyed + $quantity,$cartDetail->id); // tính lượt mua sản phẩm
 					
 
 				}
@@ -36,13 +38,23 @@ if(isset($_POST['sub'])){
 					<h3>Hoá đơn chi tiết của '.$name.'</h3>
 					<h2>Tổng tiền: '.number_format($cart->total()).'đ </h2>
 				';	
-				$mail = sendMail('kkokjun98@gmail.com',$body);
-				if($mail){
+				$send = sendMail('kkokjun98@gmail.com',$body);
+				if($send){
 					$mess = "Đặt Hàng thành công! Xin cảm ơn quý khách.";
 					unset($_SESSION['cart']);
 				}		
 			}
 
+			
+		}
+		if($pass){
+			$checkMail = $model->checkMail($mail);
+			if(!$checkMail){
+				$add = $model->registerAll($name,$mail,$pass,$gender,$address,$tel);
+			}
+			else{
+				$err = "Mail đã tồn tại! Đăng ký không thành công!";
+			}
 			
 		}		
 	}

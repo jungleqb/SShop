@@ -66,6 +66,17 @@ class shopController{
 			'thumb'=>$thumb
 		);
 	}
+	// Hàm xử lý ở trang cửa hàng
+	public function shop(){
+		if(isset($_GET['shop'])){
+			$shop = $_GET['shop'];
+			$model = new shopModel;
+			$s = $model->getProductByShop($shop);
+		}
+		return array(
+			's' => $s
+		);
+	}
 
 
 

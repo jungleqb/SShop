@@ -1,5 +1,5 @@
 <?php 
-require"view/_header.php";
+require"_header.php";
 ob_start(); 
 $typeP = $model->getMenuParent();
 ?>
@@ -118,8 +118,8 @@ $typeP = $model->getMenuParent();
 								</div>
 								<strong class="text-uppercase"> 
 									<?php 
-										if(isset($_SESSION['user_id'])){
-											echo $_SESSION['user_name'];
+										if(isset($_SESSION['iduser'])){
+											echo $_SESSION['nameu'];
 										}
 										else{
 											echo 'Tài khoản';
@@ -134,7 +134,15 @@ $typeP = $model->getMenuParent();
 								<li><a href="thanh-toan"><i class="fa fa-check"></i> Thanh toán</a></li>
 								<li><a href="dang-nhap"><i class="fa fa-unlock-alt"></i> Đăng nhập</a></li>
 								<li><a href="dang-ky"><i class="fa fa-user-plus"></i> Tạo tài khoán mới</a></li>
-								<!-- <li><a href="view/logout.php"><i class="fa fa-user-slash"></i> Đăng xuất</a></li> -->
+								<?php 
+									if(empty($_SESSION['iduser'])){
+										echo'';
+									}
+									else{
+										echo '<li><a href="logout.php"><i class="fa fa-user-slash"></i> Đăng xuất</a></li>';
+									}
+								?>
+								
 							</ul>
 						</li>
 						<!-- /Account -->

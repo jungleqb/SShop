@@ -10,6 +10,7 @@ RewriteRule ^dang-ky$ register.php
 
 
 RewriteRule ^([a-zA-Z0-9_-]+)$ typeProduct.php?url=$1
+RewriteRule ^([a-zA-Z0-9_-]+).html$ page.php?shop=$1
 RewriteRule ^([a-zA-Z0-9-]+)/([0-9]+)$ typeProduct.php?url=$1&page=$2
 RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)-([0-9]+).html$ product.php?url=$1&title=$2&id=$3
 

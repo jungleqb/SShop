@@ -3,6 +3,10 @@ if(empty($_SESSION['cart'])){
 	header('location:trang-chu');
 	return;
 }
+if(!empty($_SESSION['iduser'])){
+	header('location:checkout2.php');
+	return;
+}
 
 
 require_once"view/_checkout.php";

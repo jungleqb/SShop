@@ -1,5 +1,5 @@
 <?php 
 session_start();
-unset($_SESSION['user_name']);
+unset($_SESSION['iduser']);
 header('location:dang-nhap');
 ?>
