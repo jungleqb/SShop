@@ -170,11 +170,11 @@ class shopModel extends DBConnect{
         return false;
 	}
 // Thêm hoá đơn
-	function setBill($idCustomer, $total, $dateOrder, $note){
-		$sql = "INSERT INTO bill(idCustomer, total, dateOrder, note)
-				VALUES($idCustomer, '$total', '$dateOrder', '$note')
+	function setBill($idUser, $total, $dateOrder, $note){
+		$sql = "INSERT INTO bill(idUser, total, dateOrder, note)
+				VALUES($idUser, '$total', '$dateOrder', '$note')
 		";
-		$check = $this->executeQuery($sql);
+		return $this->executeQuery($sql);
 		if($check) return $this->getRecentIdInsert();
         return false;
 	}

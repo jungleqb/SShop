@@ -2,7 +2,47 @@
 $acc = $model->getAccount($_SESSION['iduser']);
 $ids = array_keys($_SESSION['cart']); //trả khoá của mảng trong session cart
 if(isset($_POST['sm'])){
-	
+	if(empty($_SESSION['cart'])){
+		header('location:trang-chu');
+		return;
+	}
+	else{
+		$note = "Xin chào";
+		$idUser = $_SESSION['iduser'];
+		date_default_timezone_set("Asia/Ho_Chi_Minh");
+		$dateOrder = date('Y-m-d', time());
+		$total = $cart->total();
+		$idBill = $model->setBill($idUser, $total, $dateOrder, $note);
+		$ids = array_keys($_SESSION['cart']);
+		if(isset($ids)){
+
+			$product = $DB->query('SELECT * FROM product WHERE id IN('.implode(',',$ids).')');
+			foreach($product as $cartDetail){
+				$idProduct = $cartDetail->id;
+				$quantity =$_SESSION['cart'][$cartDetail->id];
+				$price = $cartDetail->price;
+				$discountPrice = $cartDetail->promotionPrice;
+				$billDetail = $model->setBillDetail($idProduct,$idBill,$quantity,$price,$discountPrice);
+				$a = $model->addBuyed($cartDetail->buyed + $quantity,$cartDetail->id); // tính lượt mua sản phẩm
+				
+
+			}
+			$body = '
+				<h3>Hoá đơn chi tiết của khách hàng có mã là: '.$idUser.' </h3>
+				<h2>Tổng tiền: '.number_format($cart->total()).'đ </h2>
+			';	
+			$send = sendMail('kkokjun98@gmail.com',$body);
+			if($send){
+				$mess = "Đặt Hàng thành công! Xin cảm ơn quý khách.";
+				unset($_SESSION['cart']);
+			}		
+		}
+
+	}
+			
+			
+			
+
 }
 ?>
 <style type="text/css">
@@ -36,7 +76,7 @@ if(isset($_POST['sm'])){
 			</div>
 			<div class="row" style="margin-top: 20px; background: white;">
 				<div class="col-md-12">
-					<form method="POST" action="gio-hang">
+					<form method="POST">
 					<div class="order-summary clearfix">
 						<table class="shopping-cart-table table">
 							<thead>
@@ -112,7 +152,7 @@ if(isset($_POST['sm'])){
 							</tfoot>
 						</table>
 						<div class="pull-right">
-							<button name="sm" href="thanh-toan" class="primary-btn">Đặt hàng</button>
+							<button type="submit" name="sm" class="primary-btn">Đặt hàng</button>
 						</div>
 					</div>
 					</form>
