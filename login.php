@@ -39,7 +39,7 @@ if(isset($_POST['sm'])){
 				    <label for="exampleInputPassword1">Mật khẩu*</label>
 				    <input type="password" name="pass" placeholder="Vui lòng nhập mật khẩu của bạn" class="form-control" id="exampleInputPassword1">
 				</div>
-				<a href="">Quên mật khẩu?</a>
+				<a style="cursor: pointer;" data-toggle="modal" data-target="#loginModal" >Quên mật khẩu?</a>
 			</div>
 			<div class="col-md-4" style="padding-top: 25px">
 				<button type="submit" name="sm" class="primary-btn add-to-cart" style="width: 100%">Đăng nhập</button>
@@ -51,7 +51,60 @@ if(isset($_POST['sm'])){
 		</div>
 	</div>
 </section>
+<!-- The Modal -->
+					<div id="loginModal" class="modal fade" role="dialog">  
+				      <div class="modal-dialog">  
+				   <!-- Modal content-->  
+				           <div class="modal-content">  
+				                <div class="modal-header">  
+				                     <button type="button" class="close" data-dismiss="modal">&times;</button>  
+				                     <h4 class="modal-title">Mail đã đăng ký</h4>  
+				                </div>  
+				                <div class="modal-body"> 
 
+				                     <label>Mail</label>  
+				                     <input type="email" name="rpmail" id="rpmail" class="form-control" />  
+				                     <br />   
+				                     <button type="button" name="login_button" id="login_button" class="primary-btn add-to-cart">Gửi</button>  
+				                </div>  
+				           </div>  
+				      </div>  
+				 </div> 
+<script>
+// Get the modal
+$(document).ready(function(){
+	$('#login_button').click(function(){  
+           var rpmail = $('#rpmail').val();   
+           if(rpmail != '')  
+           {  
+                $.ajax({  
+                     url:"view/checkcode.php",  
+                     method:"POST",  
+                     data: {rpmail:rpmail},  
+                     success:function(data)  
+                     {  
+                          //alert(data);  
+                          if(data = 'no')  
+                          {  
+                               alert("Email chưa được đăng ký");  
+                          }  
+                          else  
+                          {  
+                               $('#loginModal').hide();
+                               alert("Mật khẩu đã gửi ở email"); 
+                               window.location = 'ca-nhan';  
+                                 
+                          }  
+                     }  
+                });  
+           }  
+           else  
+           {  
+                alert("Vui lòng điền đủ thông tin");  
+           }  
+      }); 
+});
+</script>
 
 <?php require"view/footer.php" ?>	
 	

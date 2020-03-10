@@ -28,7 +28,7 @@ class shopController{
 			$url = $_GET['url'];
 		}
 
-		$quantity = 9;
+		$quantity = 2;
 		$page = 1;
 		if(isset($_GET['page'])){
 			$page = $_GET['page'];
@@ -48,17 +48,29 @@ class shopController{
 	}
 	//  Hàm xử lý ở trang chi tiết sản phẩm
 	public function detail(){
-
+		$ssname = '';
 		if(isset($_GET['id']) && isset($_GET['url']) && isset($_GET['title'])){
 			$id = $_GET['id'];
 			$url = $_GET['url'];
 			$title = $_GET['title'];
-			$model = new shopModel;
-			$pro = $model->getProductDetail($id,$url,$title);
-
-			$thumb = $model->getThumbnail($pro->id);
-			
+				
 		}
+		$model = new shopModel;
+		$pro = $model->getProductDetail($id,$url,$title);
+
+		$thumb = $model->getThumbnail($pro->id);
+		// Tính view
+
+		
+		$ssname .='sanpham-'.$pro->idp;
+
+
+		if(!$_SESSION[$ssname]){
+			$_SESSION[$ssname] = 1;
+			$add = $pro->view + 1;
+			$addView = $model->updateView($add,$pro->idp);
+		}
+
 
 
 		return array(
@@ -72,9 +84,13 @@ class shopController{
 			$shop = $_GET['shop'];
 			$model = new shopModel;
 			$s = $model->getProductByShop($shop);
+			$count = $model->count('product',$s[0]->idShop);
+			$sum = $model->sum('product',$s[0]->idShop);
 		}
 		return array(
-			's' => $s
+			's' => $s,
+			'count' => $count,
+			'sum' => $sum
 		);
 	}
 

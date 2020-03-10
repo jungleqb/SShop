@@ -69,7 +69,7 @@ class shopModel extends DBConnect{
 	}
 // Lấy chi tiết tin
 	function getProductDetail($id,$url,$title){
-		$sql = "SELECT p.*, t.name, t.nameKo, s.nameKo as nameKoShop, s.name as nameShop
+		$sql = "SELECT p.*, t.name, t.nameKo, s.nameKo as nameKoShop, s.name as nameShop, p.id as idp
 				FROM product p 
 				INNER JOIN typeproduct t ON t.id = idType
 				INNER JOIN shop s ON s.id = idShop
@@ -135,14 +135,46 @@ class shopModel extends DBConnect{
 		";
 		return $this->getMoreRows($sql);
 	}
-// Lấy thông sản phẩm từ shop gian hàng
+// Lấy thông tin sản phẩm từ shop gian hàng
 	function getProductByShop($url){
-		$sql = "SELECT * 
+		$sql = "SELECT *, s.id as ids
 				FROM product p 
 				INNER JOIN shop s ON s.id = p.idShop
 				WHERE nameKo = '$url'
 		";
 		return $this->getMoreRows($sql);
+	}
+// Hàm đếm số lượng sản phẩm dựa vào shop
+	function count($table,$id){
+		$sql = "SELECT count(id) as soSp
+				FROM $table
+				WHERE idShop = $id
+		";
+		return $this->getOneRow($sql);
+	}
+// Hàm tính tổng sản phẩm đã mua của shop
+	function sum($table,$id){
+		$sql = "SELECT sum(buyed) as tongMua
+				FROM $table 
+				WHERE idShop = $id
+		";
+		return $this->getOneRow($sql);
+	}
+// cập nhật coin sau khi mua hàng
+	function  updateCoin($id,$coin){
+		$sql = "UPDATE user
+				SET coinTotal = $coin
+				WHERE id = $id
+		";
+		return $this->executeQuery($sql);
+	} 
+// cập nhật view sau khi xem sản phẩm
+	function updateView($add,$id){
+		$sql = "UPDATE product 
+				SET view = $add
+				WHERE id = $id
+		";
+		return $this->executeQuery($sql);
 	}
 
 
@@ -151,7 +183,7 @@ class shopModel extends DBConnect{
 
 
 
-// Hàm tăng lượt xem trang
+// Hàm tăng sản phẩm khi mua 
 	function addBuyed($add,$id){
 		$sql = "UPDATE product
 				SET buyed = $add
@@ -170,11 +202,11 @@ class shopModel extends DBConnect{
         return false;
 	}
 // Thêm hoá đơn
-	function setBill($idUser, $total, $dateOrder, $note){
-		$sql = "INSERT INTO bill(idUser, total, dateOrder, note)
-				VALUES($idUser, '$total', '$dateOrder', '$note')
+	function setBill($idUser, $total, $note){
+		$sql = "INSERT INTO bill(idUser, total, note)
+				VALUES($idUser, '$total', '$note')
 		";
-		return $this->executeQuery($sql);
+		$check = $this->executeQuery($sql);
 		if($check) return $this->getRecentIdInsert();
         return false;
 	}

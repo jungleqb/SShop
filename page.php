@@ -3,6 +3,8 @@ require_once"controller/shopController.php";
 $ctr = new shopController;
 $data = $ctr->shop();
 $s = $data['s'];
+$count = $data['count'];
+$sum = $data['sum'];
 ?>
 <style type="text/css">
 	.bg-image {
@@ -55,9 +57,10 @@ $s = $data['s'];
 <section style="padding-top: 100px; background: #f5f5f5">
 	<div class="container" style="background: white">
 		<div class="row" style="font-size:20px; color:#F8694A; background: #f5f5f5; padding-bottom: 20px ">
-			<div class="col-md-4"><i class="fa fa-shopping-bag"></i> Sản phẩm : 100</div>
-			<div class="col-md-4"><i class="fa fa-star"></i> Đánh giá: 4.8</div>
-			<div class="col-md-4"><i class="fa fa-user-plus"> Ngày tham gia: 20/11/2012</i></div>
+			<div class="col-md-3"><i class="fa fa-shopping-bag"></i> Sản phẩm : <?=tinh($count->soSp)?></div>
+			<div class="col-md-3"><i class="fa fa-star"></i> Đánh giá: 4.8</div>
+			<div class="col-md-3"><i class="fa fa-user-plus"> Ngày tham gia: 20/11/2012</i></div>
+			<div class="col-md-3"><i class="fa fa-shopping-cart"></i> Đã bán: <?=tinh($sum->tongMua)?></div>
 		</div>
 		<div class="row" style="padding: 15px; ">
 			<p style="font-size: 21px">THÔNG TIN SHOP</p>

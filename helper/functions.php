@@ -37,7 +37,75 @@ function createToken($length = 40){
       $str = str_replace("&","va", str_replace("&*#39;","",$str));
       return $str;
 }
+// Hàm tính thời gian trôi qua
+function time_elapsed_string($datetime, $full = false) {
+  date_default_timezone_set("Asia/Ho_Chi_Minh");
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
 
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => 'năm',
+        'm' => 'tháng',
+        'w' => 'tuần',
+        'd' => 'ngày',
+        'h' => 'giờ',
+        'i' => 'phút',
+        's' => 'giây',
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? '' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full) $string = array_slice($string, 0, 1);
+    return $string ? implode(', ', $string) . ' trước' : 'Bây giờ';
+}
+// Hàm tính tiền coin 
+function coin($price){
+  $coin = $price / 1000;
+  return $coin;
+}
+// Hàm chuyển đổi 1000 = k
+function tinh($so){
+  $x = (string)$so;
+  $a = substr($x,0,1);
+  $b = substr($x,1,1);
+  $c = substr($x,2,1);
+  $bb = (int)$b;
+  if($so >= 1000 && $so < 10000){
+    if($bb > 0){
+      return $a.','.$b.'k';
+    }
+    else{
+      return $a.'k';
+    }
+
+  }
+  elseif($so >= 10000 && $so < 100000){
+    return $a.$b.'k'; 
+  }
+  elseif($so >= 100000 && $so < 1000000){
+    return $a.$b.$c.'k';
+  }
+  elseif($so >= 1000000 && $so < 10000000){
+    if($bb > 0){
+      return $a.','.$b.'M';
+    }
+    else{
+      return $a.'M';
+    }
+  }
+  else{
+    return $so;
+  }
+}
 
 
 // Hàm cắt ảnh

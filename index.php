@@ -160,7 +160,7 @@ $hot = $index['hot'];
 									</div>
 									<h2 class="product-name"><a href="#"><?=$sl->title?></a></h2>
 									<div class="product-btns">
-										<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+										<span>Đã bán <?=tinh($sl->buyed)?></span>
 										<a href="addCart.php?id=<?=$sl->id?>" class="addCart"><button class="primary-btn add-to-cart" ><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button></a>
 									</div>
 								</div>

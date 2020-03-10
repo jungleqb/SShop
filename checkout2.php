@@ -9,10 +9,11 @@ if(isset($_POST['sm'])){
 	else{
 		$note = "Xin chào";
 		$idUser = $_SESSION['iduser'];
-		date_default_timezone_set("Asia/Ho_Chi_Minh");
-		$dateOrder = date('Y-m-d', time());
 		$total = $cart->total();
-		$idBill = $model->setBill($idUser, $total, $dateOrder, $note);
+		$idBill = $model->setBill($idUser, $total, $note);
+
+
+		
 		$ids = array_keys($_SESSION['cart']);
 		if(isset($ids)){
 
@@ -24,6 +25,7 @@ if(isset($_POST['sm'])){
 				$discountPrice = $cartDetail->promotionPrice;
 				$billDetail = $model->setBillDetail($idProduct,$idBill,$quantity,$price,$discountPrice);
 				$a = $model->addBuyed($cartDetail->buyed + $quantity,$cartDetail->id); // tính lượt mua sản phẩm
+
 				
 
 			}
@@ -35,6 +37,7 @@ if(isset($_POST['sm'])){
 			if($send){
 				$mess = "Đặt Hàng thành công! Xin cảm ơn quý khách.";
 				unset($_SESSION['cart']);
+				header("location:ca-nhan?com=bill&act=waitcheck");
 			}		
 		}
 

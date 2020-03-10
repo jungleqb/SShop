@@ -1,59 +1,37 @@
 <?php 
-require_once"model/shopModel.php";
-$model = new shopModel;
-require_once"vendor/autoload.php";
+function tinh($so){
+	$x = (string)$so;
+	$a = substr($x,0,1);
+	$b = substr($x,1,1);
+	$c = substr($x,2,1);
+	$bb = (int)$b;
+	if($so >= 1000 && $so < 10000){
+		if($bb > 0){
+			return $a.','.$b.'k';
+		}
+		else{
+			return $a.'k';
+		}
 
-if(!session_id()){
-	session_start();
-}
-
-$facebook = new \Facebook\Facebook([
-	'app_id' => '2389593001339406',
-	'app_secret' => 'a032fec8ad7623cd67cdf8750f1b3e65',
-	'default_graph_version' => 'v2.10'
-]);
-$facebook_output = '';
-
-$facebook_helper = $facebook->getRedirectLoginHelper();
-
-if(isset($_GET['code'])){
-	if(isset($_GET['access_token'])){
-		$access_token = $_SESSION['access_token'];
+	}
+	elseif($so >= 10000 && $so < 100000){
+		return $a.$b.'k'; 
+	}
+	elseif($so >= 100000 && $so < 1000000){
+		return $a.$b.$c.'k';
+	}
+	elseif($so >= 1000000 && $so < 10000000){
+		if($bb > 0){
+			return $a.','.$b.'M';
+		}
+		else{
+			return $a.'M';
+		}
 	}
 	else{
-		$access_token = $facebook_helper->getAccessToken();
-		$_SESSION['access_token'] = $access_token;
-		$facebook->setDefaultAccessToken($_SESSION['access_token']);
-	}
-	$graph_response = $facebook->get("/me?fields=id,names", $access_token);
-	$facebook_user_info = $graph_response->getGraphUser();
-	if(!empty($facebook_user_info['id'])){
-		$_SESSION['user_image'] = 'http://graph.facebook.com/'.$facebook_user_info['id'].'/picture';
-	}
-	if(!empty($facebook_user_info['name'])){
-		$_SESSION['user_name'] = $facebook_user_info['name'];
-	}
-	if(!empty($facebook_user_info['email'])){
-		$_SESSION['user_email'] = $facebook_user_info['email'];
-	}
-	if(!empty($facebook_user_info['id'])){
-		$_SESSION['user_id'] = $facebook_user_info['id']; 
-	}
-	if(isset($_SESSION['user_id'])){
-		$name = $_SESSION['user_name'];
-		$idfb = $_SESSION['user_id'];
-		$mail = $_SESSION['user_email'];
-		$c = $model->setLoginFacebook($idfb,$name,$mail);
+		return $so;
 	}
 }
-else{
-	$facebook_permissions = ['email'];
 
-	$facebook_login_url = $facebook_helper->getLoginUrl('http://localhost/shop/shop/login.php',$facebook_permissions);
-
-	$facebook_login_url = '<a href="'.$facebook_login_url.'"><img src="upload/loginfb.png" width="100%"></a>';
-}
-
-
-
+echo tinh(2122100);
 ?>

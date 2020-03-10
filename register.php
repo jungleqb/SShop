@@ -1,53 +1,37 @@
 <?php require_once "view/header.php";
 
 $error = array();
+$output = '<button type="submit" name="sm" class="primary-btn" style="width: 100%">Đăng ký</button>';
 
 if(isset($_POST['sm'])){
-	if(empty($_POST['name'])) $error[] = 'name'; else $name = $_POST['name'];
-	if(empty($_POST['mail'])) $error[] = 'mail'; else $mail = $_POST['mail'];
-	if(empty($_POST['pass'])) $error[] = 'pass'; else $pass = $_POST['pass'];
-	if(empty($_POST['rpass'])) $error[] = 'rpass'; else $rpass = $_POST['rpass'];
+	if(empty($_POST['name'])) $error[] = 'name'; else $_SESSION['acc']['name'] = $_POST['name'];
+	if(empty($_POST['mail'])) $error[] = 'mail'; else $_SESSION['acc']['mail'] = $_POST['mail'];
+	if(empty($_POST['pass'])) $error[] = 'pass'; else $_SESSION['acc']['pass'] = $_POST['pass'];
+	if(empty($_POST['rpass'])) $error[] = 'rpass'; else $_SESSION['acc']['rpass'] = $_POST['rpass'];
 
 	if(empty($error)){
-		if($pass == $rpass){
-			$codeToken = createToken(6);
-			$body = 'Mã xác nhận mail <br><h3>'.$codeToken.'</h3>';
-			$tmail = sendMail($mail,$body);
-			if($tmail){
-				$output = '
-					<i>*Mã đã gửi về mail của bạn. Xin vui lòng xác nhận</i>
-					<div class="form-group">
-				    <label for="exampleInputEmail1">Mã xác nhận </label>
-				    <input type="text" name="token" placeholder="Mã xác nhận mail của bạn" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-					</div>
-					<button type="submit" name="xm" class="primary-btn" style="width: 100%">Xác nhận</button>
-				';
-
-				
-				
+		if($_SESSION['acc']['pass'] == $_SESSION['acc']['rpass']){
+			$checkMail = $model->checkMail($_SESSION['acc']['mail']);
+			if($checkMail){
+				$mess = "Email đã tồn tại";
+				$output = '<button type="submit" name="sm" class="primary-btn" style="width: 100%">Đăng ký</button>';
 			}
-			
-
+			else{
+				$_SESSION['acc']['token'] = createToken(6);
+				$send = sendMail($_SESSION['acc']['mail'],$_SESSION['acc']['token']);
+				$output = '<button type="button" name="login" id="login" data-toggle="modal" data-target="#loginModal" class="primary-btn" style="width: 100%">Tiếp tục</button>';
+			}
 		}
 		else{
 			$mess = "* Mật không nhập lại không trùng khớp";
+			$output = '<button type="submit" name="sm" class="primary-btn" style="width: 100%">Đăng ký</button>';
 		}
 	}
 	else{
 		$mess = "* Xin vui lòng điền đủ thông tin";
+		$output = '<button type="submit" name="sm" class="primary-btn" style="width: 100%">Đăng ký</button>';
 	}
 
-if($output){
-					if(isset($_POST['xm'])){
-						$token = $_POST['token'];
-						if($token == $codeToken){
-							$a = $model->register($name,$mail,$pass);
-							if($a){
-								$mess = "Success!";
-							}
-						}
-					}					
-				}
 }
 				
 	
@@ -64,33 +48,33 @@ if($output){
 			<p style="color:red"><?php if(isset($mess)) echo $mess ?></p>
 		<form method="POST">
 			<div class="col-md-7">
+				
 				<div class="form-group">
 				    <label for="exampleInputEmail1">Email*</label>
-				    <input type="email" name="mail" value="<?php if(isset($mail)) echo $mail?>" placeholder="Vui lòng nhập email của bạn" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+				    <input width="70%" type="email" name="mail" value="<?php if(isset($_SESSION['acc']['mail'])) echo $_SESSION['acc']['mail']?>" placeholder="Vui lòng nhập email của bạn" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
 				</div>
 				<div class="form-group">
-				    <label for="exampleInputPassword1">Mật khẩu*</label>
-				    <input type="password" name="pass" value="<?php if(isset($pass)) echo $pass?>" placeholder="Vui lòng nhập mật khẩu của bạn" class="form-control" id="exampleInputPassword1">
+				    <label for="exampleInputEmail1">Mật khẩu</label>
+				    <input type="password" name="pass" value="<?php if(isset($_SESSION['acc']['pass'])) echo $_SESSION['acc']['pass']?>" placeholder="Vui lòng nhập họ tên của bạn" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
 				</div>
 				<div class="form-group">
-				    <label for="exampleInputPassword1">Nhập lại mật khẩu*</label>
-				    <input type="password" name="rpass" value="<?php if(isset($rpass)) echo $rpass?>" placeholder="Vui lòng nhập mật khẩu của bạn" class="form-control" id="exampleInputPassword1">
+				    <label for="exampleInputEmail1">Nhập lại mật khẩu</label>
+				    <input type="password" name="rpass" value="<?php if(isset($_SESSION['acc']['rpass'])) echo $_SESSION['acc']['rpass']?>" placeholder="Vui lòng nhập họ tên của bạn" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
 				</div>
-					<?php 
-					if(isset($output)){
-						echo $output;
-					}
-				?>
+
+
+				
+
 				
 			</div>
 
 			<div class="col-md-5">
 				<div class="form-group">
 				    <label for="exampleInputEmail1">Họ tên*</label>
-				    <input type="text" name="name" value="<?php if(isset($name)) echo $name?>" placeholder="Vui lòng nhập họ tên của bạn" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+				    <input width="70%" type="text" name="name" value="<?php if(isset($_SESSION['acc']['name'])) echo $_SESSION['acc']['name']?>" placeholder="Vui lòng nhập email của bạn" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
 				</div>
+				<?php if(isset($output)) echo $output; ?>
 
-				<button type="submit" name="sm" class="primary-btn" style="width: 100%">Đăng ký</button>
 				<p style="font-size: 12px; padding-top: 5px">Hoặc đăng ký bằng</p>
 				
           		    <img src="upload/loginfb.png" width="100%">
@@ -100,6 +84,59 @@ if($output){
 		</div>
 	</div>
 </section>
+<!-- The Modal -->
+					<div id="loginModal" class="modal fade" role="dialog">  
+				      <div class="modal-dialog">  
+				   <!-- Modal content-->  
+				           <div class="modal-content">  
+				                <div class="modal-header">  
+				                     <button type="button" class="close" data-dismiss="modal">&times;</button>  
+				                     <h4 class="modal-title">Vui lòng xác nhận Mail</h4>  
+				                </div>  
+				                <div class="modal-body"> 
+				                	 <p>Đã gửi tới: <?=$_SESSION['acc']['mail']?></p> 
+				                     <label>Mã code</label>  
+				                     <input type="text" name="code" id="code" class="form-control" />  
+				                     <br />   
+				                     <button type="button" name="login_button" id="login_button" class="primary-btn add-to-cart">Xác nhận</button>  
+				                </div>  
+				           </div>  
+				      </div>  
+				 </div> 
+
+<script>
+// Get the modal
+$(document).ready(function(){
+	$('#login_button').click(function(){  
+           var code = $('#code').val();   
+           if(code != '')  
+           {  
+                $.ajax({  
+                     url:"view/checkcode.php",  
+                     method:"POST",  
+                     data: {code:code},  
+                     success:function(data)  
+                     {  
+                          //alert(data);  
+                          if(data = 'not')  
+                          {  
+                               alert("Mã không trùng khớp");  
+                          }  
+                          else  
+                          {  
+                               $('#loginModal').hide();  
+                               window.location = 'ca-nhan';  
+                          }  
+                     }  
+                });  
+           }  
+           else  
+           {  
+                alert("Vui lòng điền đủ thông tin");  
+           }  
+      }); 
+});
+</script>
 
 
 <?php require"view/footer.php" ?>	
